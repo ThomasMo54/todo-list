@@ -6,6 +6,9 @@ import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Temporal
 import jakarta.persistence.TemporalType
+import org.hibernate.annotations.JdbcTypeCode
+import java.sql.Types
+import java.time.LocalDateTime
 import java.util.Date
 import java.util.UUID
 
@@ -13,17 +16,18 @@ import java.util.UUID
 class Task(
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @JdbcTypeCode(Types.VARCHAR)
     val id: UUID,
     var description: String,
     var done: Boolean,
-    @Temporal(TemporalType.DATE)
-    val creationDate: Date,
-    @Temporal(TemporalType.DATE)
-    var dueDate: Date,
+    val creationDate: LocalDateTime,
+    var dueDate: LocalDateTime,
+    @JdbcTypeCode(Types.VARCHAR)
+    val ownerId: UUID,
 ) {
 
     override fun toString(): String {
-        return "Task[id=$id, description=$description, done=$done, creationDate=$creationDate, dueDate=$dueDate]"
+        return "Task[id=$id, description=$description, done=$done, creationDate=$creationDate, dueDate=$dueDate, ownerId=$ownerId]"
     }
 
     override fun equals(other: Any?): Boolean {
