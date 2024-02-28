@@ -1,5 +1,6 @@
 package com.motompro.todolist.api.service
 
+import com.motompro.todolist.api.entity.User
 import org.springframework.security.authorization.AuthorizationDecision
 import org.springframework.security.authorization.AuthorizationManager
 import org.springframework.security.core.Authentication
@@ -17,6 +18,8 @@ class UserSecurity : AuthorizationManager<RequestAuthorizationContext> {
     }
 
     fun hasUsername(authentication: Authentication, username: String): Boolean {
-        return authentication.name == username
+        val principal = authentication.principal
+        if (principal !is User) return false
+        return principal.username == username
     }
 }

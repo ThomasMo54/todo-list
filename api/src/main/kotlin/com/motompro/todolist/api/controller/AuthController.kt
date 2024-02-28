@@ -36,10 +36,12 @@ class AuthController {
 
     @PostMapping("/login")
     fun login(@RequestBody loginRequest: LoginRequest, request: HttpServletRequest, response: HttpServletResponse) {
-        val token = UsernamePasswordAuthenticationToken.unauthenticated(loginRequest.username, loginRequest.password)
+        val token = UsernamePasswordAuthenticationToken(loginRequest.username, loginRequest.password)
         val authentication = authenticationManager.authenticate(token)
         val context = SecurityContextHolder.getContext()
         context.authentication = authentication
+        val session = request.getSession(true)
+        session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, context)
     }
 
     @PostMapping("/register")

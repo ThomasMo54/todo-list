@@ -8,4 +8,6 @@ import java.util.UUID
 interface TaskRepository : CrudRepository<Task, UUID> {
 
     override fun findById(id: UUID): Optional<Task>
+
+    fun findAllByOwnerUsername(ownerUsername: String): List<Task>
 }

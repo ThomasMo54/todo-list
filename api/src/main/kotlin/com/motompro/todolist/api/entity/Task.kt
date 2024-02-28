@@ -1,5 +1,8 @@
 package com.motompro.todolist.api.entity
 
+import com.fasterxml.jackson.annotation.JsonFormat
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
@@ -8,6 +11,7 @@ import jakarta.persistence.Table
 import jakarta.persistence.Temporal
 import jakarta.persistence.TemporalType
 import org.hibernate.annotations.JdbcTypeCode
+import org.springframework.format.annotation.DateTimeFormat
 import java.sql.Types
 import java.time.LocalDateTime
 import java.util.Date
@@ -22,7 +26,9 @@ class Task(
     val id: UUID = UUID.randomUUID(),
     var description: String,
     var done: Boolean = false,
-    val creationDate: LocalDateTime,
+    @Temporal(TemporalType.TIMESTAMP)
+    val creationDate: LocalDateTime = LocalDateTime.now(),
+    @Temporal(TemporalType.TIMESTAMP)
     var dueDate: LocalDateTime,
     val ownerUsername: String,
 ) {

@@ -1,5 +1,6 @@
 package com.motompro.todolist.api.config
 
+import com.motompro.todolist.api.service.UserSecurity
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
@@ -16,9 +17,10 @@ import org.springframework.security.web.SecurityFilterChain
 class SecurityConfiguration {
 
     @Bean
-    fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
+    fun securityFilterChain(http: HttpSecurity, userSecurity: UserSecurity): SecurityFilterChain {
         http
             .authorizeHttpRequests { authorize -> authorize
+                .requestMatchers("/users/{username}/**").access(userSecurity)
                 .anyRequest().permitAll()
             }
             .csrf { csrf -> csrf.ignoringRequestMatchers("/**") }
