@@ -20,8 +20,8 @@ class UserController {
     @Autowired
     private lateinit var taskRepository: TaskRepository
 
-    @GetMapping("/{username}/tasks")
-    fun tasks(@PathVariable(value = "username") username: String): ResponseEntity<List<Task>> {
+    @GetMapping("/{user}/tasks")
+    fun tasks(@PathVariable(value = "user") username: String): ResponseEntity<List<Task>> {
         val tasks = taskRepository.findAllByOwnerUsername(username)
         return ResponseEntity(tasks, HttpStatus.OK)
     }
